@@ -60,7 +60,7 @@ function ScoreDrivenModels.log_likelihood(::Type{ScoreDrivenModels.Normal}, y::V
 end
 
 gas = Model(1, 1, Normal, 1.0, time_varying_params=[1])
-initial_params = [mean(filter(!isnan, nile.flow)) var(filter(!isnan, nile.flow))]
+initial_params = [nile.flow[1] var(filter(!isnan, nile.flow))]
 gas.ω[1] = 0
 # Fit specified model to historical data
 f = ScoreDrivenModels.fit!(gas, nile.flow; opt_method=NelderMead(gas, 10), initial_params=initial_params)
